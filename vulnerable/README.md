@@ -1,5 +1,7 @@
 # TP Sécurité web - Application vulnérable
 
+Par `Olivier PERDRIX M2 IW`
+
 ## Initialisation du projet
 ```bash
 docker compose up
