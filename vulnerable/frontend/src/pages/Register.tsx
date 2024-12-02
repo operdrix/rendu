@@ -1,55 +1,84 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import axiosInstance from "../services/axiosInstance";
 
 const RegisterPage = () => {
-  const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    axiosInstance.post("/register", { email, username, password })
-      .then(() => navigate("/login"))
-      .catch((error) => console.error("Registration failed:", error));
+
+    if (!username || !email || !password) {
+      toast.error("All fields are required.");
+      return;
+    }
+
+    axiosInstance
+      .post("/auth/register", { username, email, password })
+      .then(() => {
+        toast.success("Registration successful! Please login.");
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.error("Registration failed:", error);
+        toast.error("Registration failed. Please try again.");
+      });
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <form
-        onSubmit={handleRegister}
-        className="bg-white p-6 rounded-lg shadow-md w-full max-w-md"
-      >
-        <h1 className="text-2xl font-bold mb-6">Register</h1>
-        <input
-          type="text"
-          placeholder="Username"
-          className="w-full p-2 border rounded mb-4"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          className="w-full p-2 border rounded mb-4"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full p-2 border rounded mb-4"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button
-          type="submit"
-          className="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600"
-        >
-          Register
-        </button>
-      </form>
+    <div className="flex justify-center items-center min-h-screen bg-base-200">
+      <div className="card w-96 bg-base-100 shadow-xl">
+        <div className="card-body">
+          <h2 className="card-title">Register</h2>
+          <form onSubmit={handleRegister}>
+            <div className="form-control mb-4">
+              <label className="label">
+                <span className="label-text">Username</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Username"
+                className="input input-bordered"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
+            <div className="form-control mb-4">
+              <label className="label">
+                <span className="label-text">Email</span>
+              </label>
+              <input
+                type="email"
+                placeholder="Email"
+                className="input input-bordered"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="form-control mb-4">
+              <label className="label">
+                <span className="label-text">Password</span>
+              </label>
+              <input
+                type="password"
+                placeholder="Password"
+                className="input input-bordered"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <div className="form-control mt-6">
+              <button type="submit" className="btn btn-primary">
+                Register
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
