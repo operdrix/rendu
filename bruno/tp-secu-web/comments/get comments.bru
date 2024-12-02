@@ -1,0 +1,11 @@
+meta {
+  name: get comments
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{host}}/articles/1/comments
+  body: none
+  auth: inherit
+}

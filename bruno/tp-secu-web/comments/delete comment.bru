@@ -1,0 +1,18 @@
+meta {
+  name: delete comment
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{host}}/comments/3
+  body: none
+  auth: inherit
+}
+
+body:json {
+  {
+    "content": "Super article !!",
+    "user_id": 2
+  }
+}

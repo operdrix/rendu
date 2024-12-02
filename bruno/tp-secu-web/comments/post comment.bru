@@ -1,0 +1,18 @@
+meta {
+  name: post comment
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{host}}/articles/4/comments
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "content": "Super article !!",
+    "user_id": 2
+  }
+}

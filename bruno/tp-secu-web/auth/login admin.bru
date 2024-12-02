@@ -1,0 +1,23 @@
+meta {
+  name: login admin
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{host}}/auth/login
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "email": "admin@example.com",
+    "password": "adminhashedpassword"
+  }
+}
+
+script:post-response {
+  const data = res.getBody();
+  bru.setEnvVar("token",data.token)
+}

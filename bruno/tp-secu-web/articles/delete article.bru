@@ -1,0 +1,19 @@
+meta {
+  name: delete article
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{host}}/articles/4
+  body: none
+  auth: inherit
+}
+
+body:json {
+  {
+    "title": "Mon article",
+    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus congue sem tortor, quis faucibus ante venenatis non. In vestibulum accumsan ligula, a fermentum risus rutrum vel. Vestibulum id sollicitudin lectus, sit amet aliquam nibh. Etiam egestas erat ac blandit efficitur. Nam tempor hendrerit tortor sit amet fringilla. Nulla luctus arcu nulla, nec condimentum diam varius at. Vestibulum in interdum odio. Pellentesque venenatis, nisl in suscipit sollicitudin, mauris leo blandit velit, in rutrum augue velit ac diam. Sed maximus nisl id est tempor elementum. Donec ut est dolor. Integer feugiat, lorem ut dapibus auctor, libero metus luctus ligula, ac sodales tortor sapien nec dolor. Curabitur vestibulum nulla eros, vitae fringilla mi elementum vel.",
+    "author_id": "1"
+  }
+}

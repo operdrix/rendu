@@ -1,0 +1,20 @@
+meta {
+  name: modify user
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{host}}/users/2
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username": "olivier",
+    "email": "user1@example.com",
+    "password": "user1hashedpassword",
+    "role": "user"
+  }
+}

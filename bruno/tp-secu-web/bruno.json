@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "tp-secu-web",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
