@@ -34,41 +34,43 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-base-200">
-      <div className="card w-96 bg-base-100 shadow-xl">
-        <div className="card-body">
-          <h2 className="card-title">Connexion au blog</h2>
-          <form onSubmit={handleLogin}>
-            <div className="form-control mb-4">
-              <label className="label">
-                <span className="label-text">Email</span>
-              </label>
-              <input
-                type="email"
-                placeholder="Email"
-                className="input input-bordered"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div className="form-control mb-4">
-              <label className="label">
-                <span className="label-text">Mot de passe</span>
-              </label>
-              <input
-                type="password"
-                placeholder="Password"
-                className="input input-bordered"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <div className="form-control mt-6">
-              <button type="submit" className="btn btn-primary">
-                Se connecter
-              </button>
-            </div>
-          </form>
+    <div className="main-bg p-4 flex">
+      <div className="flex justify-center items-center h-auto flex-1">
+        <div className="card w-96 shadow-xl backdrop-blur-xl bg-white/30">
+          <div className="card-body">
+            <h2 className="card-title">Connexion au blog</h2>
+            <form onSubmit={handleLogin}>
+              <div className="form-control mb-4">
+                <label className="label">
+                  <span className="label-text">Email</span>
+                </label>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  className="input input-bordered"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div className="form-control mb-4">
+                <label className="label">
+                  <span className="label-text">Mot de passe</span>
+                </label>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  className="input input-bordered"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              <div className="form-control mt-6">
+                <button type="submit" className="btn btn-primary">
+                  Se connecter
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>

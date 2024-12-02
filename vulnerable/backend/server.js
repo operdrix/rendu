@@ -17,7 +17,7 @@ const commentRoutes = require('./routes/comments');
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/articles', articleRoutes);
-app.use('/api/comments', commentRoutes);
+app.use('/api/', commentRoutes);
 
 const PORT = 5100;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

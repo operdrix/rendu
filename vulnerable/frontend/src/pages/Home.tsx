@@ -23,20 +23,26 @@ const HomePage = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="container mx-auto px-4 min-h-screen">
-      <h1 className="text-4xl font-bold my-8">Articles</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {articles.map((article: any) => (
-          <div
-            key={article.id}
-            className="border rounded-lg p-4 shadow-lg hover:shadow-xl transition-shadow"
-          >
-            <Link to={`/article/${article.id}`}>
-              <h2 className="text-2xl font-semibold">{article.title}</h2>
-            </Link>
-            <p className="text-gray-600 mt-2">{article.content.substring(0, 100)}...</p>
-          </div>
-        ))}
+    <div className="main-bg p-4 flex">
+      <div className="container mx-auto px-4">
+        <h1 className="text-4xl font-bold my-8">Les derniers articles</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {articles.map((article: any) => (
+
+            <div
+              key={article.id}
+              className="card bg-base-100 w-96 shadow-xl"
+            >
+              <div className="card-body">
+                <h2 className="card-title">{article.title}</h2>
+                <p>{article.content.substring(0, 100)}...</p>
+                <div className="card-actions justify-end">
+                  <Link to={`/article/${article.id}`} className="btn btn-primary">Voir plus</Link>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

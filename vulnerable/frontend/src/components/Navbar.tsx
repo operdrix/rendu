@@ -3,7 +3,6 @@ import { useUser } from "../context/UserContext";
 
 const Navbar = () => {
   const { user, logout } = useUser();
-  console.log(user);
 
   return (
     <div className="navbar bg-base-100 shadow-lg">
@@ -15,13 +14,13 @@ const Navbar = () => {
       <div className="navbar-end">
         <ul className="menu menu-horizontal px-1 gap-2">
           <li>
-            <Link className="" to="/">Home</Link>
+            <Link className="" to="/">Accueil</Link>
           </li>
           {user ? (
             <>
               {user.role === "admin" && (
                 <li>
-                  <Link className="" to="/admin">Admin</Link>
+                  <Link className="" to="/admin">Administration</Link>
                 </li>
               )}
               <li>
@@ -39,10 +38,10 @@ const Navbar = () => {
           ) : (
             <>
               <li>
-                <Link className="" to="/login">Login</Link>
+                <Link className="" to="/login">Connexion</Link>
               </li>
               <li>
-                <Link className="" to="/register">Register</Link>
+                <Link className="" to="/register">Inscription</Link>
               </li>
             </>
           )}

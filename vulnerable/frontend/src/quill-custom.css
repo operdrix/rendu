@@ -1,0 +1,34 @@
+/* Applique un style général à la barre d'outils */
+.ql-toolbar {
+  @apply bg-base-100 text-base-content rounded-lg mb-4;
+}
+
+/* Style du conteneur de l'éditeur */
+.ql-container {
+  @apply bg-base-100 text-base-content rounded-lg;
+  height: 300px; /* Ajuste la hauteur selon tes besoins */
+  border: 1px solid #ccc !important;
+}
+
+/* Style du texte de l'éditeur */
+.ql-editor {
+  @apply text-base-content leading-relaxed rounded-lg;
+  font-family: inherit; /* Utilise la même police que DaisyUI */
+  font-size: medium;
+}
+
+/* Ajoute des styles pour les boutons de la barre d'outils */
+.ql-toolbar button {
+  @apply hover:bg-gray-200 rounded transition duration-200 ease-in-out;
+}
+
+/* Style des liens insérés */
+.ql-editor a {
+  @apply text-blue-500 underline;
+}
+
+/* Ajoute des marges autour des listes */
+.ql-editor ol,
+.ql-editor ul {
+  @apply list-decimal list-inside ml-4 text-base-content;
+}

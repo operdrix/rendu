@@ -4,7 +4,7 @@ const db = require('../db'); // Connexion à la base de données
 const { authenticate, authorizeAdmin } = require('../middlewares/authMiddleware');
 
 // Route pour lister les utilisateurs
-router.get('/', authenticate, authorizeAdmin, (req, res) => {
+router.get('/', (req, res) => {
   const sql = 'SELECT * FROM users';
   db.query(sql, (err, results) => {
     if (err) {
@@ -17,7 +17,7 @@ router.get('/', authenticate, authorizeAdmin, (req, res) => {
 });
 
 // Route pour récupérer un utilisateur spécifique
-router.get('/:id', authenticate, (req, res) => {
+router.get('/:id', (req, res) => {
   const { id } = req.params;
   const sql = 'SELECT * FROM users WHERE id = ?';
   db.query(sql, [id], (err, results) => {
@@ -33,7 +33,7 @@ router.get('/:id', authenticate, (req, res) => {
 });
 
 // Route pour supprimer un utilisateur
-router.delete('/:id', (req, res) => {
+router.delete('/:id', authenticate, authorizeAdmin, (req, res) => {
   const { id } = req.params;
   const sql = 'DELETE FROM users WHERE id = ?';
   db.query(sql, [id], (err, results) => {
@@ -47,7 +47,7 @@ router.delete('/:id', (req, res) => {
 });
 
 // Route pour modifier un utilisateur
-router.put('/:id', (req, res) => {
+router.put('/:id', authenticate, authorizeAdmin, (req, res) => {
   const { id } = req.params;
   const { username, email, password, role } = req.body;
   const sql = 'UPDATE users SET username = ?, email = ?, password = ?, role = ? WHERE id = ?';
