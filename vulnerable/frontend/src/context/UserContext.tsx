@@ -2,7 +2,7 @@ import React, { createContext, ReactNode, useContext, useState } from "react";
 import { toast } from "react-toastify";
 
 interface User {
-  id: string;
+  id: number;
   username: string;
   role: string; // user | admin
 }
