@@ -3,6 +3,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import './App.css';
+import Footer from "./components/Footer";
 import Navbar from './components/Navbar';
 import { UserProvider } from './context/UserContext';
 import AdminPage from './pages/Admin';
@@ -27,6 +28,7 @@ function App() {
           <Route path="/admin" element={<AdminPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
+        <Footer />
       </Router>
     </UserProvider>
   );

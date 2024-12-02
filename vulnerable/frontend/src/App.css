@@ -3,5 +3,5 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  min-height: calc(100vh - 68px);
+  min-height: calc(100vh - 5rem - 4rem);
 }

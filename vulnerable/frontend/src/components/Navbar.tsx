@@ -5,7 +5,7 @@ const Navbar = () => {
   const { user, logout } = useUser();
 
   return (
-    <div className="navbar bg-base-100 shadow-lg">
+    <div className="navbar bg-base-100 shadow-lg h-20">
       <div className="navbar-start">
         <Link to="/" className="btn btn-ghost normal-case text-xl">
           BlogApp
