@@ -14,7 +14,7 @@ const LoginPage = () => {
     e.preventDefault();
 
     if (!email || !password) {
-      toast.error("All fields are required.");
+      toast.error("Email et mot de passe sont requis.");
       return;
     }
 
@@ -37,7 +37,7 @@ const LoginPage = () => {
     <div className="flex justify-center items-center min-h-screen bg-base-200">
       <div className="card w-96 bg-base-100 shadow-xl">
         <div className="card-body">
-          <h2 className="card-title">Login</h2>
+          <h2 className="card-title">Connexion au blog</h2>
           <form onSubmit={handleLogin}>
             <div className="form-control mb-4">
               <label className="label">
@@ -53,7 +53,7 @@ const LoginPage = () => {
             </div>
             <div className="form-control mb-4">
               <label className="label">
-                <span className="label-text">Password</span>
+                <span className="label-text">Mot de passe</span>
               </label>
               <input
                 type="password"
@@ -65,7 +65,7 @@ const LoginPage = () => {
             </div>
             <div className="form-control mt-6">
               <button type="submit" className="btn btn-primary">
-                Login
+                Se connecter
               </button>
             </div>
           </form>
