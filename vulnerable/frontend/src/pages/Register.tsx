@@ -32,7 +32,7 @@ const RegisterPage = () => {
   return (
     <div className="main-bg p-4 flex">
       <div className="flex justify-center items-center h-auto flex-1">
-        <div className="card w-96 shadow-xl backdrop-blur-xl bg-white/30">
+        <div className="card w-96 backdrop-blur-sm bg-white/60">
           <div className="card-body">
             <h2 className="card-title">Inscription au blog</h2>
             <form onSubmit={handleRegister}>

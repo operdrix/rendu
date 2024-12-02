@@ -31,11 +31,11 @@ const HomePage = () => {
 
             <div
               key={article.id}
-              className="card bg-base-100 w-96 shadow-xl"
+              className="card bg-base-100 min-w-96 backdrop-blur-sm bg-white/60"
             >
               <div className="card-body">
                 <h2 className="card-title">{article.title}</h2>
-                <p>{article.content.substring(0, 100)}...</p>
+                <p dangerouslySetInnerHTML={{ __html: `${article.content.substring(0, 100)}...` }}></p>
                 <div className="card-actions justify-end">
                   <Link to={`/article/${article.id}`} className="btn btn-primary">Voir plus</Link>
                 </div>

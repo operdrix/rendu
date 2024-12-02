@@ -8,6 +8,7 @@ type Article = {
   id: string;
   title: string;
   content: string;
+  author_id: number;
 }
 
 type Comment = {
@@ -99,48 +100,54 @@ const ArticlePage = () => {
   return (
     <div className="main-bg p-4 flex">
       <div className="container mx-auto px-4 mt-7">
-        <div className="mb-8">
+        <div className="mb-8 backdrop-blur-xs bg-white/60 p-3 rounded-lg">
           <h1 className="text-4xl font-bold mb-4">{article.title}</h1>
-          <p className="text-lg">{article.content}</p>
+          <p className="text-gray-500 text-sm mb-6">Par : {
+            users.find((u) => Number(u.id) === Number(article.author_id))?.username || "Utilisateur inconnu"
+          }</p>
+          <p className="text-lg" dangerouslySetInnerHTML={{ __html: article.content }}></p>
         </div>
 
-        <div className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Commentaires</h2>
-          {comments.length > 0 ? (
-            <ul className="space-y-4">
-              {comments.map((comment) => (
-                <li key={comment.id} className="border rounded-lg p-4 bg-base-100 shadow-md">
-                  <p>{comment.content}</p>
-                  <p className="text-sm text-gray-500 mt-2">
-                    Par : {
-                      users.find((u) => Number(u.id) === Number(comment.user_id))?.username || "Utilisateur inconnu"
-                    }
-                  </p>
-                </li>
-              ))}
-            </ul>
+        <h2 className="text-2xl font-semibold mb-8">Commentaires</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="mb-8">
+            {comments.length > 0 ? (
+              <ul className="space-y-4">
+                {comments.map((comment) => (
+                  <li key={comment.id} className="border rounded-lg p-4 bg-base-100 shadow-md">
+                    <p dangerouslySetInnerHTML={{ __html: comment.content }}></p>
+                    <p className="text-sm text-gray-500 mt-2">
+                      Par : {
+                        users.find((u) => Number(u.id) === Number(comment.user_id))?.username || "Utilisateur inconnu"
+                      }
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>Aucun commentaire pour le moment.</p>
+            )}
+          </div>
+
+          {user ? (
+            <form onSubmit={handleCommentSubmit} className="mb-8 flex gap-2">
+              <textarea
+                className="textarea textarea-bordered w-full mb-4 min-h-28"
+                placeholder="Ajouter un commentaire..."
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+
+              />
+              <button type="submit" className="btn btn-primary">
+                Poster
+              </button>
+            </form>
           ) : (
-            <p>Aucun commentaire pour le moment.</p>
+            <div className="alert alert-info">
+              <p>Veuillez <a href="/login" className="underline">vous connecter</a> pour commenter.</p>
+            </div>
           )}
         </div>
-
-        {user ? (
-          <form onSubmit={handleCommentSubmit} className="mb-8">
-            <textarea
-              className="textarea textarea-bordered w-full mb-4"
-              placeholder="Ajouter un commentaire..."
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-            />
-            <button type="submit" className="btn btn-primary">
-              Poster
-            </button>
-          </form>
-        ) : (
-          <div className="alert alert-info">
-            <p>Veuillez <a href="/login" className="underline">vous connecter</a> pour commenter.</p>
-          </div>
-        )}
       </div>
     </div>
   );
