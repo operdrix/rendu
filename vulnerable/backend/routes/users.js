@@ -56,7 +56,15 @@ router.put('/:id', authenticate, authorizeAdmin, (req, res) => {
       console.error('Erreur lors de la modification de l\'utilisateur :', err);
       res.status(500).json({ error: 'Erreur lors de la modification de l\'utilisateur' });
     } else {
-      res.json({ message: 'Utilisateur modifié avec succès' });
+      const updatedUserSql = 'SELECT * FROM users WHERE id = ?';
+      db.query(updatedUserSql, [id], (err, updatedResults) => {
+        if (err) {
+          console.error('Erreur lors de la récupération de l\'utilisateur modifié :', err);
+          res.status(500).json({ error: 'Erreur lors de la récupération de l\'utilisateur modifié' });
+        } else {
+          res.json(updatedResults[0]);
+        }
+      });
     }
   });
 });

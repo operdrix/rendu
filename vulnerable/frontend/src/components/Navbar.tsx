@@ -20,7 +20,17 @@ const Navbar = () => {
             <>
               {user.role === "admin" && (
                 <li>
-                  <Link className="" to="/admin">Administration</Link>
+                  <details>
+                    <summary>Adminitration</summary>
+                    <ul className="bg-base-100 rounded-t-none p-2">
+                      <li>
+                        <Link className="" to="/admin/articles">Articles</Link>
+                      </li>
+                      <li>
+                        <Link className="" to="/admin/users">Utilisateurs</Link>
+                      </li>
+                    </ul>
+                  </details>
                 </li>
               )}
               <li>

@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import ReactQuill from "react-quill-new";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useUser } from "../context/UserContext";
-import axiosInstance from "../services/axiosInstance";
+import { useUser } from "../../context/UserContext";
+import axiosInstance from "../../services/axiosInstance";
 
 type Article = {
   id: string;
@@ -20,7 +20,7 @@ type User = {
   role: string;
 }
 
-const AdminPage = () => {
+const AdminArticlesPage = () => {
   const { user } = useUser();
   const quillRef = useRef<ReactQuill>(null);
   const navigate = useNavigate();
@@ -28,7 +28,6 @@ const AdminPage = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [newArticle, setNewArticle] = useState({ title: "", content: "", author_id: user ? Number(user.id) : undefined });
   const [editingArticle, setEditingArticle] = useState<Article | null>(null);
 
   useEffect(() => {
@@ -104,20 +103,26 @@ const AdminPage = () => {
 
     } else {
       // Ajout d'un nouvel article
-      axiosInstance
-        .post("/articles", newArticle)
-        .then((response) => {
-          toast.success("Article ajouté !");
-          setArticles([...articles, { ...newArticle, id: response.data.id, comments: [] }]);
-          setNewArticle({ title: "", content: "", author_id: user?.id });
-          if (quillRef.current) {
-            quillRef.current.getEditor().root.innerHTML = "";
-          }
-        })
-        .catch((error) => {
-          console.error("Erreur lors de l'ajout de l'article :", error);
-          toast.error("Impossible d'ajouter l'article.");
-        });
+      const newArticle = {
+        title,
+        content,
+        author_id: user ? user.id : undefined,
+      };
+
+      try {
+        const response = await axiosInstance.post("/articles", newArticle);
+        toast.success("Article ajouté !");
+        setArticles([...articles, { ...newArticle, id: response.data.id, comments: [] }]);
+        setTitle("");
+        setContent("");
+        if (quillRef.current) {
+          quillRef.current.getEditor().root.innerHTML = "";
+        }
+      } catch (error) {
+        console.error("Erreur lors de l'ajout de l'article :", error);
+        toast.error("Impossible d'ajouter l'article.");
+      }
+
     }
   };
 
@@ -131,7 +136,8 @@ const AdminPage = () => {
   // Annuler l'édition d'un article
   const handleCancelEdit = () => {
     setEditingArticle(null);
-    setNewArticle({ title: "", content: "", author_id: user?.id });
+    setTitle("");
+    setContent("");
   };
 
   // Supprimer un article
@@ -165,20 +171,6 @@ const AdminPage = () => {
       .catch((error) => {
         console.error("Erreur lors de la suppression du commentaire :", error);
         toast.error("Impossible de supprimer le commentaire.");
-      });
-  };
-
-  // Supprimer un utilisateur
-  const handleDeleteUser = (id: number) => {
-    axiosInstance
-      .delete(`/users/${id}`)
-      .then(() => {
-        toast.success("Utilisateur supprimé !");
-        setUsers(users.filter((user) => user.id !== id));
-      })
-      .catch((error) => {
-        console.error("Erreur lors de la suppression de l'utilisateur :", error);
-        toast.error("Impossible de supprimer l'utilisateur.");
       });
   };
 
@@ -319,32 +311,9 @@ const AdminPage = () => {
           </ul>
         </section>
 
-        <section>
-          <h2 className="text-2xl font-semibold mb-4">Gestion des Utilisateurs</h2>
-          <ul className="space-y-4">
-            {users && users.length > 0 ? (
-              users.map((user) => (
-                <li key={user.id} className="border p-4 rounded shadow">
-                  <p>
-                    <strong>{user.username}</strong> ({user.email})
-                  </p>
-                  <p>Rôle : {user.role}</p>
-                  <button
-                    onClick={() => handleDeleteUser(user.id)}
-                    className="btn btn-error mt-4"
-                  >
-                    Supprimer
-                  </button>
-                </li>
-              ))
-            ) : (
-              <p>Aucun utilisateur disponible.</p>
-            )}
-          </ul>
-        </section>
       </div>
     </div>
   );
 };
 
-export default AdminPage;
+export default AdminArticlesPage;
