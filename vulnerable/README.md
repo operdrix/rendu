@@ -12,3 +12,11 @@ docker compose up
 - La base de donnée mysql s'exécute sur le port 3306
 - Phpmyadmin est accessible via le port 8080 http://localhost:8080
 
+## Utilisateurs de base
+
+simple utilisateur :
+- user@example.fr
+- userpassword
+administrateur :
+- admin@example.fr
+- adminpassword

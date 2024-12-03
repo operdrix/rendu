@@ -13,19 +13,19 @@ const RegisterPage = () => {
     e.preventDefault();
 
     if (!username || !email || !password) {
-      toast.error("All fields are required.");
+      toast.error("Tous les champs sont requis.");
       return;
     }
 
     axiosInstance
       .post("/auth/register", { username, email, password })
       .then(() => {
-        toast.success("Registration successful! Please login.");
+        toast.success("Votre compte a été créé avec succès, veuillez vous connecter.");
         navigate("/login");
       })
       .catch((error) => {
         console.error("Registration failed:", error);
-        toast.error("Registration failed. Please try again.");
+        toast.error(error.response?.data?.error || "Une erreur s'est produite lors de l'inscription.");
       });
   };
 

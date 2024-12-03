@@ -29,7 +29,7 @@ const LoginPage = () => {
       })
       .catch((error) => {
         console.error("Login failed:", error);
-        toast.error("Email ou mot de passe incorrect.");
+        toast.error(error.response?.data?.error || "Une erreur s'est produite lors de la connexion.");
       });
   };
 

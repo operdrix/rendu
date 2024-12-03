@@ -41,6 +41,7 @@ const ArticlePage = () => {
       .catch((error) => {
         console.error("Erreur lors de la récupération de l'article :", error);
         toast.error("Impossible de charger l'article.");
+        return navigate("/not-found");
       });
 
     // Récupérer les utilisateurs
@@ -130,7 +131,7 @@ const ArticlePage = () => {
           </div>
 
           {user ? (
-            <form onSubmit={handleCommentSubmit} className="mb-8 flex gap-2">
+            <form onSubmit={handleCommentSubmit} className="mb-8 flex gap-2 max-h-60">
               <textarea
                 className="textarea textarea-bordered w-full mb-4 min-h-28"
                 placeholder="Ajouter un commentaire..."

@@ -5,9 +5,14 @@ const { generateToken } = require('../utils/jwt');
 // Route pour s'inscrire
 router.post('/register', async (req, res) => {
   const { username, email, password } = req.body;
-  const sql = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
+  const checkSql = 'SELECT * FROM users WHERE email = ? OR username = ?';
+  const insertSql = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
   try {
-    const [results] = await req.db.execute(sql, [username, email, password]);
+    const [existingUsers] = await req.db.execute(checkSql, [email, username]);
+    if (existingUsers.length > 0) {
+      return res.status(400).json({ error: 'Email ou nom d\'utilisateur déjà utilisé' });
+    }
+    const [results] = await req.db.execute(insertSql, [username, email, password]);
     res.status(201).json({ message: 'Utilisateur créé avec succès', id: results.insertId });
   } catch (err) {
     console.error('Erreur lors de l\'inscription :', err);
@@ -18,13 +23,16 @@ router.post('/register', async (req, res) => {
 // Route pour se connecter
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
-  const sql = 'SELECT * FROM users WHERE email = ? AND password = ?';
+  const sql = 'SELECT * FROM users WHERE email = ?';
   try {
-    const [results] = await req.db.execute(sql, [email, password]);
+    const [results] = await req.db.execute(sql, [email]);
     if (results.length === 0) {
-      return res.status(401).json({ error: 'Email ou mot de passe incorrect' });
+      return res.status(401).json({ error: 'Email incorrect' });
     }
     const user = results[0];
+    if (user.password !== password) {
+      return res.status(401).json({ error: 'Mot de passe incorrect' });
+    }
     const token = generateToken(user);
     res.json({ message: 'Connexion réussie', token, user });
   } catch (err) {
