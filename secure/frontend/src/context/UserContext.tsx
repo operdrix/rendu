@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 interface User {
   id: number;
   username: string;
+  email: string;
   role: string; // user | admin
 }
 

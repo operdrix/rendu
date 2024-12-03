@@ -49,8 +49,8 @@ router.put('/:id', authenticate, authorizeAdmin, async (req, res) => {
   const { username, email, role } = req.body;
   const sql = 'UPDATE users SET username = ?, email = ?, role = ? WHERE id = ?';
   try {
-    await req.db.execute(sql, [username, email, password, role, id]);
-    const newUser = { id, username, email, password, role };
+    await req.db.execute(sql, [username, email, role, id]);
+    const newUser = { id, username, email, role };
     res.json({ message: 'Utilisateur modifié avec succès', user: newUser });
   } catch (err) {
     console.error('Erreur lors de la modification de l\'utilisateur :', err);

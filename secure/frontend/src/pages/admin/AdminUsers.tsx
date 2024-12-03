@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useUser } from "../../context/UserContext";
 import axiosInstance from "../../services/axiosInstance";
@@ -13,12 +12,11 @@ type User = {
 
 const AdminUsersPage = () => {
   const { user } = useUser();
-  const navigate = useNavigate();
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
     if (!user || user.role !== "admin") {
-      navigate("/login");
+      //navigate("/login");
       return;
     }
 
@@ -30,7 +28,7 @@ const AdminUsersPage = () => {
         console.error("Erreur lors de la récupération des utilisateurs :", error);
         toast.error("Impossible de charger les utilisateurs.");
       });
-  }, [user, navigate]);
+  }, [user]);
 
   // Supprimer un utilisateur
   const handleDeleteUser = async (id: number) => {
@@ -57,11 +55,14 @@ const AdminUsersPage = () => {
     user.role = role;
     try {
       const response = await axiosInstance.put(`/users/${id}`, user);
+      console.log("Rôle mis à jour :", response.data.user);
+
       toast.success("Rôle mis à jour !");
-      setUsers(users.map((user) => (user.id === id ? response.data : user)));
+      setUsers(users.map((user) => (user.id === id ? response.data.user : user)));
     } catch (error) {
       console.error("Erreur lors de la mise à jour du rôle :", error);
       toast.error("Impossible de mettre à jour le rôle.");
+      setUsers(users.map((user) => (user.id === id ? user : user)));
     }
   }
 
@@ -84,11 +85,12 @@ const AdminUsersPage = () => {
                     <select
                       className="select select-bordered"
                       onChange={(e) => handleChangeRole(user.id, e.target.value)}
+                      value={user.role}
                     >
-                      <option value="user" selected={user.role === "user"}>
+                      <option value="user">
                         Utilisateur
                       </option>
-                      <option value="admin" selected={user.role === "admin"}>
+                      <option value="admin">
                         Administrateur
                       </option>
                     </select>
