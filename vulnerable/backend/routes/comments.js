@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db'); // Connexion à la base de données
+const db = require('../db');
 const { authenticate, authorizeAdmin } = require('../middlewares/authMiddleware');
 
 // Route pour lister les commentaires d'un article
@@ -43,7 +43,13 @@ router.post('/articles/:id/comments', authenticate, (req, res) => {
       console.error('Erreur lors de la création du commentaire :', err);
       res.status(500).json({ error: 'Erreur lors de la création du commentaire' });
     } else {
-      res.status(201).json({ message: 'Commentaire créé avec succès', id: results.insertId });
+      const newComment = {
+        id: results.insertId,
+        content,
+        user_id,
+        article_id: id
+      };
+      res.status(201).json({ message: "Commentaire ajouté à l'article", comment: newComment });
     }
   });
 });
