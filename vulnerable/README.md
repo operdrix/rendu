@@ -7,10 +7,10 @@ Par `Olivier PERDRIX M2 IW`
 docker compose up
 ```
 
-- Le frontend React s'exécute sur le port 3000 http://localhost:3000
-- Le backend ExpressJs s'exécute sur le port 5100 http://localhost:5100
-- La base de donnée mysql s'exécute sur le port 3306
-- Phpmyadmin est accessible via le port 8080 http://localhost:8080
+- Le frontend React s'exécute sur le port 4000 http://localhost:4000
+- Le backend ExpressJs s'exécute sur le port 4001 http://localhost:4001
+- La base de donnée mysql s'exécute sur le port 4002
+- Phpmyadmin est accessible via le port 4003 http://localhost:4003
 
 ## Utilisateurs de base
 

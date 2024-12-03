@@ -9,7 +9,7 @@ services:
       CHARACTER_SET_SERVER: utf8mb4
       COLLATION_SERVER: utf8mb4_general_ci
     ports:
-      - "3306:3306"
+      - "4002:3306"
     volumes:
       - db_data:/var/lib/mysql
       - ./backend/db/init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -21,7 +21,7 @@ services:
     volumes:
       - ./backend:/app
     ports:
-      - "5100:5100"
+      - "4001:5100"
     environment:
       - DB_HOST=db
       - DB_USER=root
@@ -39,7 +39,7 @@ services:
     volumes:
       - ./frontend:/app
     ports:
-      - "3000:3000"
+      - "4000:3000"
     command: sh -c "npm install && npm start"
     depends_on:
       - db
@@ -51,7 +51,7 @@ services:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: password
     ports:
-      - "8888:80"
+      - "4003:80"
     depends_on:
       - db
 
