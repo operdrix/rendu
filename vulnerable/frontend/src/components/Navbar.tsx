@@ -10,6 +10,10 @@ const Navbar = () => {
         <Link to="/" className="btn btn-ghost normal-case text-xl">
           BlogApp
         </Link>
+        <div className="badge badge-warning gap-2">
+
+          Vulnérable
+        </div>
       </div>
       <div className="navbar-end">
         <ul className="menu menu-horizontal px-1 gap-2">

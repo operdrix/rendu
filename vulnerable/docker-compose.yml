@@ -1,16 +1,21 @@
 services:
-  frontend:
-    image: node:18
-    container_name: blog_frontend
-    working_dir: /app
-    volumes:
-      - ./frontend:/app
+  db:
+    image: mysql:8
+    container_name: blog_db
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: blog
+      MYSQL_INITDB_SKIP_TZINFO: 1
+      CHARACTER_SET_SERVER: utf8mb4
+      COLLATION_SERVER: utf8mb4_general_ci
     ports:
-      - "3000:3000"
-    command: sh -c "npm install && npm start"
-
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./backend/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+  
   backend:
-    image: node:18
+    image: node:22
     container_name: blog_backend
     working_dir: /app
     volumes:
@@ -23,19 +28,22 @@ services:
       - DB_PASSWORD=password
       - DB_NAME=blog
     command: sh -c "npm install && npm run dev"
+    depends_on:
+      - db
+    restart: on-failure
 
-  db:
-    image: mysql:8
-    container_name: blog_db
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: blog
-    ports:
-      - "3306:3306"
+  frontend:
+    image: node:22
+    container_name: blog_frontend
+    working_dir: /app
     volumes:
-      - db_data:/var/lib/mysql
-      - ./backend/db/init.sql:/docker-entrypoint-initdb.d/init.sql
-  
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
+    command: sh -c "npm install && npm start"
+    depends_on:
+      - db
+
   phpmysql:
     image: phpmyadmin
     container_name: blog_phpmyadmin
@@ -44,6 +52,8 @@ services:
       MYSQL_ROOT_PASSWORD: password
     ports:
       - "8080:80"
+    depends_on:
+      - db
 
 volumes:
   db_data:

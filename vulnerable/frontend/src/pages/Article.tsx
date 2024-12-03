@@ -100,12 +100,12 @@ const ArticlePage = () => {
   return (
     <div className="main-bg p-4 flex">
       <div className="container mx-auto px-4 mt-7">
-        <div className="mb-8 backdrop-blur-xs bg-white/60 p-3 rounded-lg">
+        <div className="mb-8 backdrop-blur-sm bg-white/60 p-3 rounded-lg">
           <h1 className="text-4xl font-bold mb-4">{article.title}</h1>
           <p className="text-gray-500 text-sm mb-6">Par : {
             users.find((u) => Number(u.id) === Number(article.author_id))?.username || "Utilisateur inconnu"
           }</p>
-          <p className="text-lg" dangerouslySetInnerHTML={{ __html: article.content }}></p>
+          <p className="text-lg article-content" dangerouslySetInnerHTML={{ __html: article.content }}></p>
         </div>
 
         <h2 className="text-2xl font-semibold mb-8">Commentaires</h2>
