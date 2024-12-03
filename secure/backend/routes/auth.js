@@ -23,15 +23,13 @@ router.post('/register', async (req, res) => {
 // Route pour se connecter
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
-  const sql = 'SELECT * FROM users WHERE email = ?';
+  const sql = 'SELECT * FROM users WHERE email = ? and password = ?';
   try {
-    const [results] = await req.db.execute(sql, [email]);
+    const [results] = await req.db.execute(sql, [email, password]);
     if (results.length === 0) {
-      return res.status(401).json({ error: 'Email incorrect' });
-    }
-    const user = results[0];
-    if (user.password !== password) {
-      return res.status(401).json({ error: 'Mot de passe incorrect' });
+      // ajoute d'une temporisation pour éviter les attaques par force brute
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      return res.status(401).json({ error: 'Email ou mot de passe incorrect' });
     }
     const token = generateToken(user);
     res.json({

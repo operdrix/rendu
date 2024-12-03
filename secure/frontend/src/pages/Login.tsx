@@ -7,14 +7,17 @@ import axiosInstance from "../services/axiosInstance";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { setUser } = useUser();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     if (!email || !password) {
       toast.error("Email et mot de passe sont requis.");
+      setLoading(false);
       return;
     }
 
@@ -30,6 +33,7 @@ const LoginPage = () => {
       .catch((error) => {
         console.error("Login failed:", error);
         toast.error(error.response?.data?.error || "Une erreur s'est produite lors de la connexion.");
+        setLoading(false);
       });
   };
 
@@ -65,8 +69,8 @@ const LoginPage = () => {
                 />
               </div>
               <div className="form-control mt-6">
-                <button type="submit" className="btn btn-primary">
-                  Se connecter
+                <button type="submit" className="btn btn-primary" disabled={loading}>
+                  {loading ? <span className="loading loading-spinner loading-md"></span> : "Se connecter"}
                 </button>
               </div>
             </form>
