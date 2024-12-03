@@ -1,3 +1,4 @@
+import DOMPurify from "dompurify";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -76,7 +77,7 @@ const ArticlePage = () => {
     // Envoyer le nouveau commentaire
     axiosInstance
       .post(`/articles/${id}/comments`, {
-        content: newComment,
+        content: DOMPurify.sanitize(newComment),
         user_id: user.id,
       })
       .then((response) => {
@@ -102,11 +103,11 @@ const ArticlePage = () => {
     <div className="main-bg p-4 flex">
       <div className="container mx-auto px-4 mt-7">
         <div className="mb-8 backdrop-blur-sm bg-white/60 p-3 rounded-lg">
-          <h1 className="text-4xl font-bold mb-4">{article.title}</h1>
+          <h1 className="text-4xl font-bold mb-4">{DOMPurify.sanitize(article.title)}</h1>
           <p className="text-gray-500 text-sm mb-6">Par : {
             users.find((u) => Number(u.id) === Number(article.author_id))?.username || "Utilisateur inconnu"
           }</p>
-          <p className="text-lg article-content" dangerouslySetInnerHTML={{ __html: article.content }}></p>
+          <p className="text-lg article-content" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(article.content) }}></p>
         </div>
 
         <h2 className="text-2xl font-semibold mb-8">Commentaires</h2>
@@ -116,7 +117,7 @@ const ArticlePage = () => {
               <ul className="space-y-4">
                 {comments.map((comment) => (
                   <li key={comment.id} className="border rounded-lg p-4 bg-base-100 shadow-md">
-                    <p dangerouslySetInnerHTML={{ __html: comment.content }}></p>
+                    <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(comment.content) }}></p>
                     <p className="text-sm text-gray-500 mt-2">
                       Par : {
                         users.find((u) => Number(u.id) === Number(comment.user_id))?.username || "Utilisateur inconnu"

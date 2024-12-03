@@ -12,6 +12,7 @@
     "@types/react-dom": "^18.3.1",
     "axios": "^1.7.8",
     "daisyui": "^4.12.14",
+    "dompurify": "^3.2.2",
     "jwt-decode": "^4.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

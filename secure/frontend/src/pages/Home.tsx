@@ -1,3 +1,4 @@
+import DOMPurify from "dompurify";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axiosInstance from "../services/axiosInstance";
@@ -58,8 +59,8 @@ const HomePage = () => {
               className="card bg-base-100 min-w-96 backdrop-blur-sm bg-white/60 max-w-md"
             >
               <div className="card-body">
-                <h2 className="card-title">{article.title}</h2>
-                <p dangerouslySetInnerHTML={{ __html: `${article.content.substring(0, 100)}...` }}></p>
+                <h2 className="card-title">{DOMPurify.sanitize(article.title)}</h2>
+                <p dangerouslySetInnerHTML={{ __html: `${DOMPurify.sanitize(article.content).substring(0, 100)}...` }}></p>
                 <div className="card-actions justify-end">
                   <Link to={`/article/${article.id}`} className="btn btn-primary">Lire</Link>
                 </div>

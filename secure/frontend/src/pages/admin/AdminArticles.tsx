@@ -1,3 +1,4 @@
+import DOMPurify from "dompurify";
 import React, { useEffect, useRef, useState } from "react";
 import ReactQuill from "react-quill-new";
 import { useNavigate } from "react-router-dom";
@@ -81,7 +82,7 @@ const AdminArticlesPage = () => {
       // Mise à jour d'un article existant
       const newArticle = {
         title,
-        content,
+        content: DOMPurify.sanitize(content),
         author_id: user ? user.id : undefined,
       };
 
@@ -105,7 +106,7 @@ const AdminArticlesPage = () => {
       // Ajout d'un nouvel article
       const newArticle = {
         title,
-        content,
+        content: DOMPurify.sanitize(content),
         author_id: user ? user.id : undefined,
       };
 
@@ -274,9 +275,9 @@ const AdminArticlesPage = () => {
                     </div>
                     <p className="text-info">Par {users.find((u) => u.id === article.author_id)?.username}</p>
                   </div>
-                  <h3 className="text-xl font-bold">{article.title}</h3>
+                  <h3 className="text-xl font-bold">{DOMPurify.sanitize(article.title)}</h3>
                   <p dangerouslySetInnerHTML={{
-                    __html: `${article.content.substring(0, 100)}...`
+                    __html: `${DOMPurify.sanitize(article.content).substring(0, 100)}...`
                   }}></p>
                   <h4 className="text-lg font-semibold mt-4">
                     Commentaires ({article.comments?.length})
@@ -289,7 +290,7 @@ const AdminArticlesPage = () => {
                             <p className="text-info">
                               Par {users.find((u) => Number(u.id) === Number(comment.user_id))?.username}
                             </p>
-                            <p>{comment.content}</p>
+                            <p>{DOMPurify.sanitize(comment.content)}</p>
                           </div>
                           <button
                             onClick={() => handleDeleteComment(comment.id, article.id)}
