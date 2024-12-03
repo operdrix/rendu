@@ -33,6 +33,7 @@ router.post('/login', async (req, res) => {
       await new Promise(resolve => setTimeout(resolve, 2000));
       return res.status(401).json({ error: 'Email ou mot de passe incorrect' });
     }
+    const user = results[0];
     const token = generateToken(user);
     res.json({
       message: 'Connexion réussie',
