@@ -1,0 +1,15 @@
+.main-bg {
+  background-image: url('../public//wallpaper.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: calc(100vh - 5rem - 4rem);
+}
+
+.article-content {
+  p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+}
