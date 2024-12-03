@@ -1,7 +1,7 @@
 services:
   db:
     image: mysql:8
-    container_name: blog_db
+    container_name: blog_secure_db
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: blog
@@ -9,19 +9,19 @@ services:
       CHARACTER_SET_SERVER: utf8mb4
       COLLATION_SERVER: utf8mb4_general_ci
     ports:
-      - "4002:3306"
+      - "4102:3306"
     volumes:
       - db_data:/var/lib/mysql
       - ./backend/db/init.sql:/docker-entrypoint-initdb.d/init.sql
   
   backend:
     image: node:22
-    container_name: blog_backend
+    container_name: blog_secure_backend
     working_dir: /app
     volumes:
       - ./backend:/app
     ports:
-      - "4001:5100"
+      - "4101:5100"
     environment:
       - DB_HOST=db
       - DB_USER=root
@@ -34,24 +34,24 @@ services:
 
   frontend:
     image: node:22
-    container_name: blog_frontend
+    container_name: blog_secure_frontend
     working_dir: /app
     volumes:
       - ./frontend:/app
     ports:
-      - "4000:3000"
+      - "4100:3000"
     command: sh -c "npm install && npm start"
     depends_on:
       - db
 
   phpmysql:
     image: phpmyadmin
-    container_name: blog_phpmyadmin
+    container_name: blog_secure_phpmyadmin
     environment:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: password
     ports:
-      - "4003:80"
+      - "4103:80"
     depends_on:
       - db
 

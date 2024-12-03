@@ -1,7 +1,7 @@
 services:
   db:
     image: mysql:8
-    container_name: blog_db
+    container_name: blog_vulnerable_db
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: blog
@@ -16,7 +16,7 @@ services:
   
   backend:
     image: node:22
-    container_name: blog_backend
+    container_name: blog_vulnerable_backend
     working_dir: /app
     volumes:
       - ./backend:/app
@@ -34,7 +34,7 @@ services:
 
   frontend:
     image: node:22
-    container_name: blog_frontend
+    container_name: blog_vulnerable_frontend
     working_dir: /app
     volumes:
       - ./frontend:/app
@@ -46,7 +46,7 @@ services:
 
   phpmysql:
     image: phpmyadmin
-    container_name: blog_phpmyadmin
+    container_name: blog_vulnerable_phpmyadmin
     environment:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: password

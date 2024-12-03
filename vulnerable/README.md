@@ -4,7 +4,7 @@ Par `Olivier PERDRIX M2 IW`
 
 ## Initialisation du projet
 ```bash
-docker compose up
+docker compose up --build
 ```
 
 - Le frontend React s'exécute sur le port 4000 http://localhost:4000
