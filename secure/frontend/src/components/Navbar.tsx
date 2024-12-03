@@ -10,9 +10,8 @@ const Navbar = () => {
         <Link to="/" className="btn btn-ghost normal-case text-xl">
           BlogApp
         </Link>
-        <div className="badge badge-warning gap-2">
-
-          Vulnérable
+        <div className="badge badge-success gap-2">
+          Sécurisé
         </div>
       </div>
       <div className="navbar-end">
