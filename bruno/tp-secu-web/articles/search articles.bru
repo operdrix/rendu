@@ -1,0 +1,17 @@
+meta {
+  name: search articles
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{host}}/articles/search
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "title": "failles"
+  }
+}

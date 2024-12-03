@@ -14,6 +14,25 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Route pour chercher un article par titre
+router.post('/search', async (req, res) => {
+  console.log(
+    'req.body:', req.body,
+  );
+
+  const { title } = req.body;
+  const sql = `SELECT * FROM articles WHERE title LIKE '%${title}%'`;
+  console.log(sql);
+
+  try {
+    const [results] = await req.db.query(sql);
+    res.json(results);
+  } catch (err) {
+    console.error('Erreur lors de la recherche des articles :', err);
+    res.status(500).json({ error: 'Erreur lors de la recherche des articles' });
+  }
+});
+
 // Route pour récupérer un article spécifique
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
