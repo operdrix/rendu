@@ -7,13 +7,16 @@ const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     if (!username || !email || !password) {
       toast.error("Tous les champs sont requis.");
+      setLoading(false);
       return;
     }
 
@@ -26,6 +29,7 @@ const RegisterPage = () => {
       .catch((error) => {
         console.error("Registration failed:", error);
         toast.error(error.response?.data?.error || "Une erreur s'est produite lors de l'inscription.");
+        setLoading(false);
       });
   };
 
@@ -73,8 +77,8 @@ const RegisterPage = () => {
                 />
               </div>
               <div className="form-control mt-6">
-                <button type="submit" className="btn btn-primary">
-                  Register
+                <button type="submit" className="btn btn-primary" disabled={loading}>
+                  {loading ? <span className="loading loading-spinner loading-md"></span> : "S'inscrire"}
                 </button>
               </div>
             </form>

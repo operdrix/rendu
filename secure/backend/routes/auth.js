@@ -10,6 +10,8 @@ router.post('/register', async (req, res) => {
   try {
     const [existingUsers] = await req.db.execute(checkSql, [email, username]);
     if (existingUsers.length > 0) {
+      // ajoute d'une temporisation pour éviter les attaques par force brute
+      await new Promise(resolve => setTimeout(resolve, 2000));
       return res.status(400).json({ error: 'Email ou nom d\'utilisateur déjà utilisé' });
     }
     const [results] = await req.db.execute(insertSql, [username, email, password]);
