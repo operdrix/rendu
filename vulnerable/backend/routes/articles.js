@@ -31,7 +31,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Route pour créer un nouvel article
-router.post('/', authenticate, authorizeAdmin, async (req, res) => {
+router.post('/', async (req, res) => {
   const { title, content, author_id } = req.body;
   const sql = 'INSERT INTO articles (title, content, author_id) VALUES (?, ?, ?)';
   try {
@@ -50,7 +50,7 @@ router.post('/', authenticate, authorizeAdmin, async (req, res) => {
 });
 
 // Route pour modifier un article
-router.put('/:id', authenticate, authorizeAdmin, async (req, res) => {
+router.put('/:id', async (req, res) => {
   const { id } = req.params;
   const { title, content, author_id } = req.body;
   const sql = 'UPDATE articles SET title = ?, content = ?, author_id = ? WHERE id = ?';
