@@ -26,18 +26,18 @@ const HomePage = () => {
     <div className="main-bg p-4 flex">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold my-8">Les derniers articles</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="flex flex-wrap gap-6 justify-center">
           {articles.map((article: any) => (
 
             <div
               key={article.id}
-              className="card bg-base-100 min-w-96 backdrop-blur-sm bg-white/60"
+              className="card bg-base-100 min-w-96 backdrop-blur-sm bg-white/60 max-w-md"
             >
               <div className="card-body">
                 <h2 className="card-title">{article.title}</h2>
                 <p dangerouslySetInnerHTML={{ __html: `${article.content.substring(0, 100)}...` }}></p>
                 <div className="card-actions justify-end">
-                  <Link to={`/article/${article.id}`} className="btn btn-primary">Voir plus</Link>
+                  <Link to={`/article/${article.id}`} className="btn btn-primary">Lire</Link>
                 </div>
               </div>
             </div>
