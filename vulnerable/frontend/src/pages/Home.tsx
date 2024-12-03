@@ -6,7 +6,6 @@ const HomePage = () => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [search, setSearch] = useState<string | null>(null);
 
   useEffect(() => {
     axiosInstance.get("/articles")
