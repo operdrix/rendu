@@ -16,16 +16,11 @@ router.get('/', async (req, res) => {
 
 // Route pour chercher un article par titre
 router.post('/search', async (req, res) => {
-  console.log(
-    'req.body:', req.body,
-  );
-
-  const { title } = req.body;
-  const sql = `SELECT * FROM articles WHERE title LIKE '%${title}%'`;
-  console.log(sql);
-
+  let { title } = req.body;
+  title = `%${title}%`;
+  const sql = `SELECT * FROM articles WHERE title LIKE ?`;
   try {
-    const [results] = await req.db.query(sql);
+    const [results] = await req.db.execute(sql, [title]);
     res.json(results);
   } catch (err) {
     console.error('Erreur lors de la recherche des articles :', err);
