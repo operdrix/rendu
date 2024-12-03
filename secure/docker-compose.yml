@@ -37,11 +37,13 @@ services:
     image: node:22
     container_name: blog_secure_frontend
     working_dir: /app
+    environment:
+      - PORT=4100
     volumes:
       - ./frontend:/app
       - frontend_node_modules:/app/node_modules
     ports:
-      - "4100:3000"
+      - "4100:4100"
     command: sh -c "npm install && npm start"
     depends_on:
       - db
