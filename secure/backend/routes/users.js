@@ -4,7 +4,7 @@ const { authenticate, authorizeAdmin } = require('../middlewares/authMiddleware'
 
 // Route pour lister les utilisateurs
 router.get('/', async (req, res) => {
-  const sql = 'SELECT * FROM users';
+  const sql = 'SELECT id, username, email, role FROM users';
   try {
     const [results] = await req.db.execute(sql);
     res.json(results);
@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
 // Route pour récupérer un utilisateur spécifique
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
-  const sql = 'SELECT * FROM users WHERE id = ?';
+  const sql = 'SELECT id, username, email, role FROM users WHERE id = ?';
   try {
     const [results] = await req.db.execute(sql, [id]);
     if (results.length === 0) {
@@ -46,8 +46,8 @@ router.delete('/:id', authenticate, authorizeAdmin, async (req, res) => {
 // Route pour modifier un utilisateur
 router.put('/:id', authenticate, authorizeAdmin, async (req, res) => {
   const { id } = req.params;
-  const { username, email, password, role } = req.body;
-  const sql = 'UPDATE users SET username = ?, email = ?, password = ?, role = ? WHERE id = ?';
+  const { username, email, role } = req.body;
+  const sql = 'UPDATE users SET username = ?, email = ?, role = ? WHERE id = ?';
   try {
     await req.db.execute(sql, [username, email, password, role, id]);
     const newUser = { id, username, email, password, role };

@@ -1,4 +1,5 @@
-import React, { createContext, ReactNode, useContext, useState } from "react";
+import { jwtDecode } from "jwt-decode";
+import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 interface User {
@@ -16,10 +17,27 @@ interface UserContextType {
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(() => {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
     const storedUser = localStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
+    const authToken = localStorage.getItem("authToken");
+
+    if (storedUser && authToken) {
+      try {
+        const decodedToken: any = jwtDecode(authToken);
+        const userWithRole = {
+          ...JSON.parse(storedUser),
+          role: decodedToken.role,
+        };
+        setUser(userWithRole);
+      } catch (error) {
+        console.error("Erreur lors du décodage du token JWT :", error);
+        localStorage.removeItem("user");
+        localStorage.removeItem("authToken");
+      }
+    }
+  }, []);
 
   const logout = () => {
     setUser(null);
