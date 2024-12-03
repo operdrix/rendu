@@ -117,7 +117,7 @@ const ArticlePage = () => {
               <ul className="space-y-4">
                 {comments.map((comment) => (
                   <li key={comment.id} className="border rounded-lg p-4 bg-base-100 shadow-md">
-                    <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(comment.content) }}></p>
+                    <p>{DOMPurify.sanitize(comment.content)}</p>
                     <p className="text-sm text-gray-500 mt-2">
                       Par : {
                         users.find((u) => Number(u.id) === Number(comment.user_id))?.username || "Utilisateur inconnu"
