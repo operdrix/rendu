@@ -41,7 +41,13 @@ router.post('/', authenticate, authorizeAdmin, (req, res) => {
       console.error('Erreur lors de la création de l\'article :', err);
       res.status(500).json({ error: 'Erreur lors de la création de l\'article' });
     } else {
-      res.status(201).json({ message: 'Article créé avec succès', id: results.insertId });
+      const newArticle = {
+        id: results.insertId,
+        title,
+        content,
+        author_id
+      };
+      res.status(201).json({ message: 'Article créé avec succès', article: newArticle });
     }
   });
 });
@@ -58,7 +64,13 @@ router.put('/:id', authenticate, authorizeAdmin, (req, res) => {
     } else if (results.affectedRows === 0) {
       res.status(404).json({ error: 'Article introuvable' });
     } else {
-      res.json({ message: 'Article modifié avec succès' });
+      const updatedArticle = {
+        id,
+        title,
+        content,
+        author_id
+      };
+      res.json({ message: 'Article modifié avec succès', article: updatedArticle });
     }
   });
 });
