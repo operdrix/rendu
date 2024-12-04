@@ -73,6 +73,7 @@ const LoginPage = () => {
                   {loading ? <span className="loading loading-spinner loading-md"></span> : "Se connecter"}
                 </button>
               </div>
+              <p className="mt-2">Votre mot de passe est protégé</p>
             </form>
           </div>
         </div>

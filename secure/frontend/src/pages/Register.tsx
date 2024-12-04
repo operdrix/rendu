@@ -81,6 +81,7 @@ const RegisterPage = () => {
                   {loading ? <span className="loading loading-spinner loading-md"></span> : "S'inscrire"}
                 </button>
               </div>
+              <p className="mt-2">Votre mot de passe est protégé</p>
             </form>
           </div>
         </div>
